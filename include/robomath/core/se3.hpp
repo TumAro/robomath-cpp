@@ -3,6 +3,7 @@
 #include <tuple>
 #include <cmath>
 #include <Eigen/Dense>
+#include "robomath/spatial/Wrench.hpp"
 
 // SE3 is the Euclidean group of rigid body transformations
 bool SE3_test(Eigen::Matrix4d T);
@@ -13,7 +14,7 @@ Eigen::Matrix4d rotation(Eigen::Vector3d w, double theta);
 Eigen::Matrix4d translation(Eigen::Vector3d p);
 Eigen::Matrix4d trans_inverse(Eigen::Matrix4d T);
 Eigen::Matrix<double, 6, 6> adjoint(Eigen::Matrix4d T);
-Eigen::Matrix<double, 6, 1> wrench_transform(Eigen::Matrix<double, 6, 1> F, Eigen::Matrix4d T);
+Wrench wrench_transform(Wrench F, Eigen::Matrix4d T);
 Eigen::Matrix4d compose(Eigen::Matrix4d A, Eigen::Matrix4d B);
 
 // se3 is the tangent space of SE3, its Lie algebra

@@ -70,8 +70,8 @@ Matrix6 adjoint(Matrix4 T) {
   return adj;
 }
 
-Vector6 wrench_transform(Vector6 F, Matrix4 T) {
-  return adjoint(T).transpose() * F;
+Wrench wrench_transform(Wrench F, Matrix4 T) {
+  return Wrench(adjoint(T).transpose() * F.vec);
 }
 
 Matrix4 compose(Matrix4 A, Matrix4 B) {

@@ -1,20 +1,25 @@
 cmake_minimum_required(VERSION 3.20)
+project(robomath VERSION 0.1.0 LANGUAGES CXX)
 
-include(FetchContent)
-FetchContent_Declare(
-  eigen
-  GIT_REPOSITORY https://gitlab.com/libeigen/eigen.git
-  GIT_TAG 3.4.0
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+include(FetchEigen)
+
+# groups/, tangent/ and spatial/ sources join this list as they get written
+add_library(robomath_core
+  src/core/so2.cpp
+  src/core/se2.cpp
+  src/core/so3.cpp
+  src/core/se3.cpp
+  src/kinematics/forward.cpp
+  src/c_space.cpp
 )
-set(EIGEN_BUILD_DOC OFF)
-set(BUILD_TESTING OFF)
-FetchContent_MakeAvailable(eigen)
-
-project(robomath)
-
-add_library(robomath_core src/core/so2.cpp)
 target_include_directories(robomath_core PUBLIC include)
 target_link_libraries(robomath_core PUBLIC Eigen3::Eigen)
 
-add_executable(test_so2 test/test_so2.cpp)
-target_link_libraries(test_so2 PRIVATE robomath_core)
+foreach(suite so2 kinematics spatial c_space)
+  add_executable(test_${suite} tests/test_${suite}.cpp)
+  target_link_libraries(test_${suite} PRIVATE robomath_core)
+endforeach()

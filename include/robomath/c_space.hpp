@@ -24,7 +24,7 @@ public:
   explicit PlanarNBarClosedChain(std::vector<double> lengths);
 
   std::tuple<double, double, double> constraint_residual(const std::vector<double>& theta) const;
-  Eigen::MatrixXd constraint_jacobian(const std::vector<double>& theta) const;
+  Eigen::MatrixXd pfaffian(const std::vector<double>& theta) const;
   bool is_valid_config(const std::vector<double>& theta, double tolerance = 1e-8) const;
   std::vector<Eigen::Vector2d> joint_positions(const std::vector<double>& theta) const;
 
